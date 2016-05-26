@@ -10,7 +10,34 @@
     <meta name="viewport" content="width = device-width, initial-scale = 1">
     <title>ZayTron's Site</title>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="http://code.jquery.com/jquery-1.12.3.min.js"></script>
+    <script>$(document).ready(function(){
+        $('form').submit(function(e) {
+          e.preventDefault();
+        });
+        $('input').keypress(function(e){
+          if (e.which==13) {
+            var msg=$(this).val();
+          console.log(msg);
+          $('#comments').append('<p>' + msg + '</p>')
 
+          }
+        });
+        $.ajax({
+          url: 'http://jsonplaceholder.typicode.com/comments?postId=1',
+          method: 'GET'
+        }).then(function(comments) {
+          for (var i = 0; i < comments.length; i++) {
+            $('#comments').append('<p>' + comments[i].body + '</p>');
+        }
+        });
+
+
+      });
+
+
+
+    </script>
     <style>
     .jumbotron{
         background-color:#2E2D88;
@@ -49,9 +76,10 @@
       <a href="https://www.facebook.com/profile.php?id=100009344413872">Facebook</a>
       <a href="https://www.instagram.com/isaiah_himley/">Instagram</a>
       <a href="https://www.pinterest.com/ParidoxVega/">Pinterest</a>
+        <input type="text" class="form-control" placeholder="Comments">
 
       </form>
-
+<div id="comments"></div>
 
     </center>
     </div>
